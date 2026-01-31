@@ -1,10 +1,12 @@
-const INCREMENT = 'INCREMENT'
 import { createStore } from 'redux';
+const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
+const incrementByValueType = 'INCREMENT_BY_VALUE'
+
 
 const initialCounterState = {
     count: 0,
-    username: 'Guest',
+    username: ["user1"]
 }
 
 const incrementCounter = () => {
@@ -19,6 +21,13 @@ const decrementCOunter = () => {
     }
 }
 
+const incrementByValue = (value) => {
+    return {
+        type: incrementByValueType,
+        payload: value,
+    }
+}
+
 const counterReducer = (state = initialCounterState, action) => {
     switch (action.type) {
         case INCREMENT:
@@ -26,14 +35,18 @@ const counterReducer = (state = initialCounterState, action) => {
                 ...state,
                 count: state.count + 1,
             }
-
-
-
         case DECREMENT:
             return {
                 ...state,
                 count: state.count - 1,
             }
+
+        case incrementByValueType:
+            return {
+                ...state,
+                username: [...state.username, action.payload],
+            }
+        
 
 
         default:
@@ -48,4 +61,7 @@ store.subscribe(()=>{
 })
 
 //dispatching actions
-store.dispatch(incrementCounter());
+store.dispatch(incrementByValue("ravi"));
+store.dispatch(incrementByValue("rayhan"));
+store.dispatch(incrementByValue("ravi"));
+store.dispatch(incrementByValue("rayhan"));
